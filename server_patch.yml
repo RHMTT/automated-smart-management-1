@@ -8,7 +8,7 @@
     yum:
       name: '*'
       state: latest
-      exclude: "{{ package_exclude_list }}"
+      exclude: "{{ package_exclude_list | default (omit) }}"
     check_mode: "{{ check_only }}"
     register: updates
 
