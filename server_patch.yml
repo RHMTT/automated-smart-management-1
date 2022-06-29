@@ -1,9 +1,7 @@
 ---
 - hosts: "{{ patching_group | default ('centos')}}"
   become: yes
-  vars:
-    check_only: yes
-
+  tasks:
   - name: check for updates
     yum:
       name: '*'
