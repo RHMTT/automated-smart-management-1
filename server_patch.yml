@@ -1,19 +1,14 @@
 ---
-- hosts: "env_{{ lifecycle_stage }}"
+- hosts: "{{ patching_group | default ('centos')}}"
   become: yes
   vars:
     check_only: yes
-
-  tasks:
-  - name: check operating system
-    assert:
-      that: "ansible_os_family == 'RedHat'"
 
   - name: check for updates
     yum:
       name: '*'
       state: latest
-      exclude: kernel*
+      exclude: "{{ package_exclude_list | default (omit) }}"
     check_mode: "{{ check_only }}"
     register: updates
 
